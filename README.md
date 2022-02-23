@@ -6,9 +6,9 @@
 [es](https://elasticsearch.cn/explore)
 [Github deploy key](https://docs.github.com/en/developers/overview/managing-deploy-keys#deploy-keys)
 [BootStrap](https://v3.bootcss.com/getting-started)
-[Github apps](ttps://docs.github.com/en/developers/apps)
-[Github oauth apps](ttps://docs.github.com/en/developers/apps/building-oauth-apps)
-[Github creating oauth apps](ttps://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app)
+[Github apps](https://docs.github.com/en/developers/apps)
+[Github oauth apps](https://docs.github.com/en/developers/apps/building-oauth-apps)
+[Github creating oauth apps](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app)
 [授权OAuth应用程序](https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps)
 
 ## 工具
