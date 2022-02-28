@@ -13,6 +13,7 @@
 [Spring](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#bot-features-embedded-database-support)  
 [菜鸟教程](https://www.runoob.com/mysql/mysql-insert-query.html)  
 [BootStrap](https://v3.bootcss.com/css)  
+[Lombok](https://www.projectlombok.org)  
 
 ## 工具
 [Git下载](https://git-scm.com/download)  
