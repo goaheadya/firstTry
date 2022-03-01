@@ -16,7 +16,7 @@
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">SpringBoot项目实战</span>
             </button>
-            <a class="navbar-brand" href="#">SpringBoot项目实战</a>
+            <a class="navbar-brand" href="/">SpringBoot项目实战</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -65,15 +65,16 @@
                     <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag" placeholder="输入标题，以“，”分离">
                 </div>
 
-                <div class="container-fluid main" th:if="${error != null}">
+                <div class="container-fluid main">
                     <div class="row">
-                        <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}"></div>
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger" th:text="${error}" th:if="${error != null}"></div>
+                        </div>
                         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                             <button type="submit" class="btn btn-success btn-publish">发布</button>
                         </div>
                     </div>
                 </div>
-                <button th:if="${error == null}" type="submit" class="btn btn-success btn-publish">发布</button>
             </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">

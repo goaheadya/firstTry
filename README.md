@@ -14,6 +14,7 @@
 [菜鸟教程](https://www.runoob.com/mysql/mysql-insert-query.html)  
 [BootStrap](https://v3.bootcss.com/css)  
 [Lombok](https://www.projectlombok.org)  
+[Thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#setting-attribute-values)  
 
 ## 工具
 [Git下载](https://git-scm.com/download)  

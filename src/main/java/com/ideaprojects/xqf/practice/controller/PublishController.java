@@ -23,9 +23,11 @@ public class PublishController {
     private UserMapper userMapper;
 
     @GetMapping("/publish")
-    public String publish(HttpServletRequest request){
+    public String publish(HttpServletRequest request,
+                          Model model){
         Cookie[] cookies = request.getCookies();
         if(cookies == null || cookies.length == 0){
+            model.addAttribute("error","用户未登录");
             return "publish";
         }
         for(Cookie cookie : cookies){
