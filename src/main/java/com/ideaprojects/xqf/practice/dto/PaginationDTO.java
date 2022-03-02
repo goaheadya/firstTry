@@ -18,6 +18,9 @@ public class PaginationDTO {
 
     public void setPagination(Integer totalCount, Integer page, Integer size) {
         totalPage = (totalCount + (size - 1)) / size;
+        if(totalPage == 0){
+            totalPage = 1;
+        }
 
         if(page < 1){
             page = 1;
