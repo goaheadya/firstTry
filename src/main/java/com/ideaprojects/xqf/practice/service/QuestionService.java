@@ -4,6 +4,7 @@ import com.ideaprojects.xqf.practice.dto.PaginationDTO;
 import com.ideaprojects.xqf.practice.dto.QuestionDTO;
 import com.ideaprojects.xqf.practice.exception.CustomizeErrorCode;
 import com.ideaprojects.xqf.practice.exception.CustomizeException;
+import com.ideaprojects.xqf.practice.mapper.QuestionExtMapper;
 import com.ideaprojects.xqf.practice.mapper.QuestionMapper;
 import com.ideaprojects.xqf.practice.mapper.UserMapper;
 import com.ideaprojects.xqf.practice.model.Question;
@@ -22,6 +23,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     @Autowired
     private UserMapper userMapper;
@@ -45,7 +49,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public PaginationDTO list(Integer userId, Integer page, Integer size) {
+    public PaginationDTO list(Long userId, Integer page, Integer size) {
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria()
                 .andCreatorEqualTo(userId);
@@ -70,7 +74,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public QuestionDTO getById(Integer id) {
+    public QuestionDTO getById(Long id) {
         Question question = questionMapper.selectByPrimaryKey(id);
         if(question == null){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -86,6 +90,9 @@ public class QuestionService {
         if(question.getId() == null){
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(System.currentTimeMillis());
+            question.setViewCount(0);
+            question.setCommentCount(0);
+            question.setLikeCount(0);
             questionMapper.insert(question);
         }else{
             Question updateQuestion = new Question();
@@ -101,5 +108,12 @@ public class QuestionService {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
         }
+    }
+
+    public void incView(Long id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }

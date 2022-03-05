@@ -29,7 +29,7 @@ public class SessionInterception implements HandlerInterceptor {
                     userExample.createCriteria()
                                     .andTokenEqualTo(token);
                     List<User> users = userMapper.selectByExample(userExample);
-                    if (users != null) {
+                    if (users != null && users.size() != 0) {
                         request.getSession().setAttribute("user", users.get(0));
                     }
                     break;
