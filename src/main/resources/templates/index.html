@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="css/practice.css">
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        window.onload = function () {
+            var closable = window.localStorage.getItem("closable");
+            if (closable == "true") {
+                window.close();
+                window.localStorage.removeItem("closable");
+            }
+        }
+    </script>
 </head>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
@@ -44,7 +53,8 @@
                         </a>
                     </li>
                     <li>
-                        <a aria-label="Previous" th:if="${paginations.showPrevious}" th:href="@{/(page=${paginations.page} - 1)}">
+                        <a aria-label="Previous" th:if="${paginations.showPrevious}"
+                           th:href="@{/(page=${paginations.page} - 1)}">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
@@ -52,12 +62,14 @@
                         <a th:href="@{/(page=${page})}" th:text="${page}"></a>
                     </li>
                     <li>
-                        <a aria-label="Next" th:if="${paginations.showNext}" th:href="@{/(page=${paginations.page} + 1)}">
+                        <a aria-label="Next" th:if="${paginations.showNext}"
+                           th:href="@{/(page=${paginations.page} + 1)}">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li>
-                        <a aria-label="Next" th:if="${paginations.showEndPage}" th:href="@{/(page=${paginations.totalPage})}">
+                        <a aria-label="Next" th:if="${paginations.showEndPage}"
+                           th:href="@{/(page=${paginations.totalPage})}">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>

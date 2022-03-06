@@ -42,6 +42,7 @@ create table USER
 ```bash
 mvn flyway:migrate
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+mvn dependency:resolve -Dclassifier=sources   //下载源码
 ```
 
 
