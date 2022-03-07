@@ -2,6 +2,7 @@ package com.ideaprojects.xqf.practice.controller;
 
 import com.ideaprojects.xqf.practice.dto.CommentDTO;
 import com.ideaprojects.xqf.practice.dto.QuestionDTO;
+import com.ideaprojects.xqf.practice.enums.CommentTypeEnum;
 import com.ideaprojects.xqf.practice.service.CommentService;
 import com.ideaprojects.xqf.practice.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class QuestionCotroller {
     public String question(@PathVariable(name = "id") Long id,
                            Model model){
         // 获取评论列表
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
+        List<CommentDTO> comments = commentService.listByParentId(id, CommentTypeEnum.QUESTION);
 
         // 累加阅读数
         questionService.incView(id);
