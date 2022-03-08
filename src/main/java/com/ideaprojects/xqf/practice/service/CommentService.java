@@ -4,10 +4,7 @@ import com.ideaprojects.xqf.practice.dto.CommentDTO;
 import com.ideaprojects.xqf.practice.enums.CommentTypeEnum;
 import com.ideaprojects.xqf.practice.exception.CustomizeErrorCode;
 import com.ideaprojects.xqf.practice.exception.CustomizeException;
-import com.ideaprojects.xqf.practice.mapper.CommentMapper;
-import com.ideaprojects.xqf.practice.mapper.QuestionExtMapper;
-import com.ideaprojects.xqf.practice.mapper.QuestionMapper;
-import com.ideaprojects.xqf.practice.mapper.UserMapper;
+import com.ideaprojects.xqf.practice.mapper.*;
 import com.ideaprojects.xqf.practice.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +30,9 @@ public class CommentService {
     private QuestionExtMapper questionExtMapper;
 
     @Autowired
+    private CommentExtMapper commentExtMapper;
+
+    @Autowired
     private UserMapper userMapper;
 
     @Transactional  //事务注解
@@ -51,6 +51,8 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            dbComment.setCommentCount(1);
+            commentExtMapper.incCommentCount(dbComment);
         } else {
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
             if (question == null) {
