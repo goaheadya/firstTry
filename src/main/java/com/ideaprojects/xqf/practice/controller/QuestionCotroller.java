@@ -31,9 +31,13 @@ public class QuestionCotroller {
         questionService.incView(id);
         QuestionDTO questionDTO = questionService.getById(id);
 
+        //获取相关问题
+        List<QuestionDTO> relatedQuestions = questionService.selectRelated(questionDTO);
+
         // 给model赋值
         model.addAttribute("question", questionDTO);
         model.addAttribute("comments", comments);
+        model.addAttribute("relatedQuestions", relatedQuestions);
         return "question";
     }
 }
