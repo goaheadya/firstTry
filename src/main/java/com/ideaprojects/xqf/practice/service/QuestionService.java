@@ -12,6 +12,7 @@ import com.ideaprojects.xqf.practice.model.QuestionExample;
 import com.ideaprojects.xqf.practice.model.User;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,28 +34,17 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    public PaginationDTO list(Integer page, Integer size) {
+    public PaginationDTO<QuestionDTO> list(Integer page, Integer size) {
         Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
         paginationDTO.setPagination(totalCount, page, size);
 
         Integer offset = size * (paginationDTO.getPage() - 1);
         QuestionExample questionExample = new QuestionExample();
-        questionExample.setOrderByClause("gmt_create desc");
-        List<Question> questions = questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample, new RowBounds(offset, size));
-        List<QuestionDTO> questionDTOList = new ArrayList<>();
-        for (Question question : questions) {
-            User user = userMapper.selectByPrimaryKey(question.getCreator());
-            QuestionDTO questionDTO = new QuestionDTO();
-            BeanUtils.copyProperties(question, questionDTO);
-            questionDTO.setUser(user);
-            questionDTOList.add(questionDTO);
-        }
-        paginationDTO.setData(questionDTOList);
-        return paginationDTO;
+        return getQuestionDTOPaginationDTO(size, paginationDTO, offset, questionExample);
     }
 
-    public PaginationDTO list(Long userId, Integer page, Integer size) {
+    public PaginationDTO<QuestionDTO> list(Long userId, Integer page, Integer size) {
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria()
                 .andCreatorEqualTo(userId);
@@ -66,6 +56,11 @@ public class QuestionService {
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andCreatorEqualTo(userId);
+        return getQuestionDTOPaginationDTO(size, paginationDTO, offset, example);
+    }
+
+    @NotNull
+    private PaginationDTO<QuestionDTO> getQuestionDTOPaginationDTO(Integer size, PaginationDTO<QuestionDTO> paginationDTO, Integer offset, QuestionExample example) {
         example.setOrderByClause("gmt_create desc");
         List<Question> questions = questionMapper.selectByExampleWithBLOBsWithRowbounds(example, new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();

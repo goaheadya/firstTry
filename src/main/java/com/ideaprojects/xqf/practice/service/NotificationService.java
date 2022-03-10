@@ -7,7 +7,6 @@ import com.ideaprojects.xqf.practice.enums.NotificationStatusEnum;
 import com.ideaprojects.xqf.practice.exception.CustomizeErrorCode;
 import com.ideaprojects.xqf.practice.exception.CustomizeException;
 import com.ideaprojects.xqf.practice.mapper.NotificationMapper;
-import com.ideaprojects.xqf.practice.mapper.UserMapper;
 import com.ideaprojects.xqf.practice.model.Notification;
 import com.ideaprojects.xqf.practice.model.NotificationExample;
 import com.ideaprojects.xqf.practice.model.User;
@@ -16,14 +15,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class NotificationService {
     @Autowired
     private NotificationMapper notificationMapper;
 
-    public PaginationDTO list(Long userId, Integer page, Integer size) {
+    public PaginationDTO<NotificationDTO> list(Long userId, Integer page, Integer size) {
         NotificationExample notificationExample = new NotificationExample();
         notificationExample.createCriteria()
                 .andReceiverEqualTo(userId);
@@ -47,7 +48,6 @@ public class NotificationService {
             notificationDTO.setTypeName(NotificationEnum.nameOfType(notification.getType()));
             notificationDTOList.add(notificationDTO);
         }
-
         paginationDTO.setData(notificationDTOList);
         return paginationDTO;
     }
