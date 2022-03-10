@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class PaginationDTO {
+public class PaginationDTO<T> {
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;
@@ -14,7 +14,7 @@ public class PaginationDTO {
     private Integer page;
     private List<Integer> pages = new ArrayList<>();
     private Integer totalPage;
-    private List<QuestionDTO> questionDTOList;
+    private List<T> data;
 
     public void setPagination(Integer totalCount, Integer page, Integer size) {
         totalPage = (totalCount + (size - 1)) / size;

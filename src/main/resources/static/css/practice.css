@@ -54,6 +54,10 @@ body {
     margin-top: 10px;
 }
 
+.publish-tag-tab .label-info {
+    white-space: normal;
+}
+
 .practice-menu {
     display: block;
     color: #999;

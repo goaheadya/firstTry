@@ -1,6 +1,7 @@
 package com.ideaprojects.xqf.practice.controller;
 
 import com.ideaprojects.xqf.practice.dto.PaginationDTO;
+import com.ideaprojects.xqf.practice.dto.QuestionDTO;
 import com.ideaprojects.xqf.practice.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +20,8 @@ public class IndexController {
     public String index(
             Model model,
             @RequestParam(name = "page", defaultValue = "1") Integer page,
-            @RequestParam(name = "size", defaultValue = "2") Integer size) {
-        PaginationDTO pagination = questionService.list(page, size);
+            @RequestParam(name = "size", defaultValue = "5") Integer size) {
+        PaginationDTO<QuestionDTO> pagination = questionService.list(page, size);
         model.addAttribute("paginations", pagination);
         return "index";
     }
