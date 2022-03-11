@@ -48,8 +48,6 @@ public class ProfileController {
             model.addAttribute("sectionName", "最新回复");
             PaginationDTO<NotificationDTO> paginationDTO = notificationService.list(user.getId(), page, size);
             model.addAttribute("paginations", paginationDTO);
-            Long unreadCount = notificationService.unreadCount(user.getId());
-            model.addAttribute("unreadCount", unreadCount);
         }
         return "profile";
     }

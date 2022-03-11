@@ -32,7 +32,6 @@ public class NotificationController {
 
     @GetMapping("/notification/{id}")
     public String notification(@PathVariable(name = "id") Long id,
-                           Model model,
                            HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {

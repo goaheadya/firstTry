@@ -3,6 +3,7 @@ package com.ideaprojects.xqf.practice.interceptor;
 import com.ideaprojects.xqf.practice.mapper.UserMapper;
 import com.ideaprojects.xqf.practice.model.User;
 import com.ideaprojects.xqf.practice.model.UserExample;
+import com.ideaprojects.xqf.practice.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -18,6 +19,9 @@ public class SessionInterception implements HandlerInterceptor {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
@@ -31,6 +35,7 @@ public class SessionInterception implements HandlerInterceptor {
                     List<User> users = userMapper.selectByExample(userExample);
                     if (users != null && users.size() != 0) {
                         request.getSession().setAttribute("user", users.get(0));
+                        request.getSession().setAttribute("unreadCount", notificationService.unreadCount(users.get(0).getId()));
                     }
                     break;
                 }
