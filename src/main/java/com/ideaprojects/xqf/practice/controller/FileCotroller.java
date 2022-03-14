@@ -12,7 +12,7 @@ public class FileCotroller {
     public FileDTO upload() {
         FileDTO fileDTO = new FileDTO();
         fileDTO.setSuccess(1);
-        fileDTO.setUrl("/images/wechat.png");
+        fileDTO.setUrl("/images/loading@2x.gif");
         return fileDTO;
     }
 }

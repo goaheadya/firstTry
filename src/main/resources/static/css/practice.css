@@ -116,3 +116,9 @@ body {
 .menu .icon:hover {
     color: #499ef3;
 }
+
+.aw-footer {
+    padding: 30px 0 10px;
+    font-size: 15px;
+    text-align: center;
+}

@@ -16,6 +16,7 @@
 [Lombok](https://www.projectlombok.org)    
 [Thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#setting-attribute-values)   
 [Spring MVC](https://docs.spring.io/spring-framework/docs/5.0.3.RELEASE/spring-framework-reference/web.html)  
+[Count(*) VS Count(1)](https://mp.weixin.qq.com/s/Rwpke4BHu7Fz7KOpE2d3Lw)
 
 ## 工具
 [Git下载](https://git-scm.com/download)  

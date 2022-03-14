@@ -63,7 +63,9 @@ public class CommentService {
             dbComment.setCommentCount(1);
             commentExtMapper.incCommentCount(dbComment);
             //创建通知
-            createNotify(comment, dbComment.getParentId(), dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationEnum.REPLY_COMMENT);
+            if(dbComment.getCommentator() != commentator.getId() && question.getCreator() != commentator.getId()){
+                createNotify(comment, dbComment.getParentId(), dbComment.getCommentator(), commentator.getName(), question.getTitle(), NotificationEnum.REPLY_COMMENT);
+            }
         } else {
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
             if (question == null) {
@@ -73,7 +75,9 @@ public class CommentService {
             question.setCommentCount(1);
             questionExtMapper.incCommentCount(question);
             //创建通知
-            createNotify(comment, question.getId(), question.getCreator(), commentator.getName(), question.getTitle(), NotificationEnum.REPLY_QUESTION);
+            if(question.getCreator() != commentator.getId()){
+                createNotify(comment, question.getId(), question.getCreator(), commentator.getName(), question.getTitle(), NotificationEnum.REPLY_QUESTION);
+            }
         }
     }
 

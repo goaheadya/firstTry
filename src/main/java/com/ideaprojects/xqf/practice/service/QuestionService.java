@@ -2,6 +2,7 @@ package com.ideaprojects.xqf.practice.service;
 
 import com.ideaprojects.xqf.practice.dto.PaginationDTO;
 import com.ideaprojects.xqf.practice.dto.QuestionDTO;
+import com.ideaprojects.xqf.practice.dto.QuestionQueryDTO;
 import com.ideaprojects.xqf.practice.exception.CustomizeErrorCode;
 import com.ideaprojects.xqf.practice.exception.CustomizeException;
 import com.ideaprojects.xqf.practice.mapper.QuestionExtMapper;
@@ -34,14 +35,37 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    public PaginationDTO<QuestionDTO> list(Integer page, Integer size) {
-        Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
+    public PaginationDTO<QuestionDTO> list(String search, Integer page, Integer size) {
+        //如果搜索框内容不为空，
+        if (StringUtils.isNotBlank(search)) {
+            String[] searchContent = StringUtils.split(search, " ");
+            search = Arrays.stream(searchContent).collect(Collectors.joining("|"));
+        }
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+        Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
         paginationDTO.setPagination(totalCount, page, size);
 
         Integer offset = size * (paginationDTO.getPage() - 1);
-        QuestionExample questionExample = new QuestionExample();
-        return getQuestionDTOPaginationDTO(size, paginationDTO, offset, questionExample);
+        questionQueryDTO.setSize(size);
+        questionQueryDTO.setPage(offset);
+        List<Question> questions = questionExtMapper.selectBySearch(questionQueryDTO);
+        return getQuestionDTOPaginationDTO(paginationDTO, questions);
+    }
+
+    @NotNull
+    private PaginationDTO<QuestionDTO> getQuestionDTOPaginationDTO(PaginationDTO<QuestionDTO> paginationDTO, List<Question> questions) {
+        List<QuestionDTO> questionDTOList = new ArrayList<>();
+        for (Question question : questions) {
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(question, questionDTO);
+            questionDTO.setUser(user);
+            questionDTOList.add(questionDTO);
+        }
+        paginationDTO.setData(questionDTOList);
+        return paginationDTO;
     }
 
     public PaginationDTO<QuestionDTO> list(Long userId, Integer page, Integer size) {
@@ -56,23 +80,9 @@ public class QuestionService {
         QuestionExample example = new QuestionExample();
         example.createCriteria()
                 .andCreatorEqualTo(userId);
-        return getQuestionDTOPaginationDTO(size, paginationDTO, offset, example);
-    }
-
-    @NotNull
-    private PaginationDTO<QuestionDTO> getQuestionDTOPaginationDTO(Integer size, PaginationDTO<QuestionDTO> paginationDTO, Integer offset, QuestionExample example) {
         example.setOrderByClause("gmt_create desc");
         List<Question> questions = questionMapper.selectByExampleWithBLOBsWithRowbounds(example, new RowBounds(offset, size));
-        List<QuestionDTO> questionDTOList = new ArrayList<>();
-        for (Question question : questions) {
-            User user = userMapper.selectByPrimaryKey(question.getCreator());
-            QuestionDTO questionDTO = new QuestionDTO();
-            BeanUtils.copyProperties(question, questionDTO);
-            questionDTO.setUser(user);
-            questionDTOList.add(questionDTO);
-        }
-        paginationDTO.setData(questionDTOList);
-        return paginationDTO;
+        return getQuestionDTOPaginationDTO(paginationDTO, questions);
     }
 
     public QuestionDTO getById(Long id) {
