@@ -1,9 +1,9 @@
-alter table NOTIFICATION
-alter column "outerId" rename to OUTERID;
+alter table notification
+alter column "outerid" rename to outerid;
 
-alter table NOTIFICATION
-    add NOTIFIER_NAME VARCHAR(100);
+alter table notification
+    add notifier_name varchar(100);
 
-alter table NOTIFICATION
-    add OUTER_TITLE VARCHAR(256);
+alter table notification
+    add outer_title varchar(256);
 

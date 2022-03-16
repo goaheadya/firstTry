@@ -1,3 +1,3 @@
-alter table NOTIFICATION
-alter column OUTERID rename to OUTER_ID;
+alter table notification
+alter column outerid rename to outer_id;
 

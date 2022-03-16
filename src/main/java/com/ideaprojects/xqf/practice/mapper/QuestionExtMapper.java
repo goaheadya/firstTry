@@ -2,9 +2,6 @@ package com.ideaprojects.xqf.practice.mapper;
 
 import com.ideaprojects.xqf.practice.dto.QuestionQueryDTO;
 import com.ideaprojects.xqf.practice.model.Question;
-import com.ideaprojects.xqf.practice.model.QuestionExample;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 

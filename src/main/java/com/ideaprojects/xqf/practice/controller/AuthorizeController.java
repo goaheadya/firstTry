@@ -6,6 +6,7 @@ import com.ideaprojects.xqf.practice.mapper.UserMapper;
 import com.ideaprojects.xqf.practice.model.User;
 import com.ideaprojects.xqf.practice.provider.GithubProvider;
 import com.ideaprojects.xqf.practice.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
+@Slf4j
 public class AuthorizeController {
 
     @Autowired
@@ -31,7 +33,7 @@ public class AuthorizeController {
 
     @Value("${github.redirect.uri}")
     private String redirectUri;
-    
+
     @Autowired
     private UserMapper userMapper;
 
@@ -65,15 +67,16 @@ public class AuthorizeController {
             response.addCookie(new Cookie("token", token));
             return "redirect:/";
         } else {
+            log.error("callback get github error,{}", githubUser);
             // 登录失败，重新登陆
             return "redirect:/";
         }
     }
-    
+
     @GetMapping("/logout")
     public String logout(
             HttpServletRequest request,
-            HttpServletResponse response){
+            HttpServletResponse response) {
         request.getSession().removeAttribute("user");
         Cookie cookie = new Cookie("token", null);
         cookie.setMaxAge(0);

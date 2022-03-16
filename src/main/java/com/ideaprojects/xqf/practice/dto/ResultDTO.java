@@ -4,8 +4,6 @@ import com.ideaprojects.xqf.practice.exception.CustomizeErrorCode;
 import com.ideaprojects.xqf.practice.exception.CustomizeException;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class ResultDTO<T> {
     private Integer code;
